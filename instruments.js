@@ -117,8 +117,9 @@
     const el=document.createElement('div');
     el.className='lbl '+cls;el.innerHTML=html;el.style.position='absolute';
     stageEl.appendChild(el);
-    const priority=prio??(cls==='peak'?4:cls==='valley'?3:cls==='plane'?1:2);
-    allLabels.push({el,v:new THREE.Vector3(x,y,z),inst,priority,anchorY:cls==='plane'?'-50%':'-100%'});
+    const isPlane=/\bplane\b/.test(cls);
+    const priority=prio??(cls.includes('peak')?4:cls.includes('valley')?3:isPlane?1:2);
+    allLabels.push({el,v:new THREE.Vector3(x,y,z),inst,priority,anchorY:isPlane?'-50%':'-100%'});
   }
 
   /* Prefer milestones / isolated peaks when screen-space labels collide. */
@@ -169,10 +170,18 @@
       gh.material.transparent=true;gh.material.opacity=.28;gh.material.blending=THREE.AdditiveBlending;gh.material.depthWrite=false;
       gh.position.y=lvl*YS;G.add(gh);
     }
-    for(const p of domains)
-      addLabel(inst,p.h>=EXPERT?'peak':(p.h<HUMAN?'valley':''),p.name+'<small>'+p.note+'</small>',p.x*SIZE/2,hgt(p.x,p.z)*YS+.9,p.z*SIZE/2);
-    addLabel(inst,'plane','human baseline = 100%',-SIZE/2-5,HUMAN*YS,0);
-    addLabel(inst,'plane','domain expert',-SIZE/2-5,EXPERT*YS,0);
+    /* Fan labels by angle + stack height so desktop "show all" doesn't clobber. */
+    const labeled=[...domains].sort((a,b)=>Math.atan2(a.z,a.x)-Math.atan2(b.z,b.x));
+    labeled.forEach((p,i)=>{
+      const stack=i%5;
+      const yOff=1.15+stack*2.35+(p.h>=EXPERT?.8:0);
+      const ang=Math.atan2(p.z,p.x), outward=.55+stack*.35;
+      const lx=p.x*SIZE/2+Math.cos(ang)*outward;
+      const lz=p.z*SIZE/2+Math.sin(ang)*outward;
+      addLabel(inst,p.h>=EXPERT?'peak':(p.h<HUMAN?'valley':''),p.name+'<small>'+p.note+'</small>',lx,hgt(p.x,p.z)*YS+yOff,lz);
+    });
+    addLabel(inst,'plane axis','human baseline = 100%',-SIZE/2-6.5,HUMAN*YS,SIZE*.22,3);
+    addLabel(inst,'plane axis','domain expert',-SIZE/2-6.5,EXPERT*YS,-SIZE*.22,3);
     return {group:G,wire,camR:84,targetY:7};
   }
 
@@ -254,10 +263,12 @@
     frontier:{
       no:'OVERVIEW',name:'The Jagged Frontier',
       desc:'AI capability by domain: expert-level peaks beside deep valleys in reliability, robotics, and physical dexterity.',
+      blurb:'Height = capability vs humans. Orange grid = domain expert. Grey grid = average human (100%). Peaks beat experts; valleys lag people.',
       pair:null,built:buildFrontier()},
     horizon:{
       no:'INSTRUMENT I',name:'Task Horizon',
       desc:'time × model × how long AI works alone — linear seconds, not log. Pre-2024 is a flat floor; the seam is the Apr-2024 breakpoint; grids at 8 h and METR\u2019s 16 h ceiling.',
+      blurb:'X = year · Y = how long a model can work alone (linear hours). The cliff after Apr 2024 is real — early models sit on the floor on purpose.',
       pair:'horizon',
       built:buildTerrain('horizon',{tRange:[2019,2026.7],camR:62,seamT:BR,
         entries:hPts.map(p=>({t:p.x,m:p.m,sub:humanTime(p.y),h:clamp(p.y/HCEIL,0,1.05),fl:p.fl})),
@@ -269,6 +280,7 @@
     compute:{
       no:'INSTRUMENT II',name:'Compute Skyline',
       desc:'time × model × training FLOP. Nine orders of magnitude, AlexNet\u2019s foothill to Grok 4\u2019s summit; Chinese open MoEs (DeepSeek, GLM, Kimi) sit far below closed compute; grids at 10²⁰/10²³/10²⁶.',
+      blurb:'X = year · Y = training compute (log FLOP). Closed labs climb to 10²⁶; open Chinese MoEs use far less compute for strong capability.',
       pair:'compute',
       built:buildTerrain('compute',{tRange:[2012,2026.5],camR:62,seamT:null,yearStep:2,
         entries:cPts.map(c=>({t:c.x,m:c.m,sub:c.y.toExponential(1)+' FLOP',h:clamp((Math.log10(c.y)-16)/11,0,1)})),
@@ -277,6 +289,7 @@
     price:{
       no:'INSTRUMENT III',name:'Cost Collapse',
       desc:'time × threshold × price of GPT-3-class capability. The only range that erodes: $60 → $0.06 through the $100/$1/$0.01 grids.',
+      blurb:'X = year · Y = $ per million tokens for GPT-3-class capability. A ~1,000× price collapse in three years — the only terrain that shrinks.',
       pair:'price',
       built:buildTerrain('price',{tRange:[2021.6,2025.4],camR:58,seamT:null,
         entries:pPts.map(p=>({t:p.x,m:'$'+p.y+' /M tok',sub:'~'+Math.floor(p.x),h:clamp((Math.log10(p.y)+2)/4,0,1)})),
@@ -361,6 +374,7 @@
   function setInstrument(id){
     const changed=cur!==id;
     cur=id;
+    const m=INSTRUMENTS[id];
     ORDER.forEach(k=>INSTRUMENTS[k].built.group.visible=(k===id));
     let activeCard=null;
     document.querySelectorAll('.inst-card').forEach(b=>{
@@ -370,11 +384,17 @@
       else b.removeAttribute?.('aria-current');
       if(active)activeCard=b;
     });
-    const openBtn=document.getElementById('open-telemetry'),pair=INSTRUMENTS[id].pair;
+    const noEl=document.getElementById('view-no');
+    const titleEl=document.getElementById('view-title');
+    const blurbEl=document.getElementById('view-blurb');
+    if(noEl)noEl.textContent=m.no;
+    if(titleEl)titleEl.textContent=m.name;
+    if(blurbEl)blurbEl.textContent=m.blurb||m.desc;
+    const openBtn=document.getElementById('open-telemetry'),pair=m.pair;
     openBtn.hidden=!pair;
     openBtn.onclick=pair?()=>openOverlay(pair):null;
     document.body.classList.toggle('has-overlay-action',!!pair);
-    target.set(0,INSTRUMENTS[id].built.targetY,0);zoom=1;
+    target.set(0,m.built.targetY,0);zoom=1;
     if(changed&&!reduced)riseT0=performance.now();
     if(changed&&isMobile)activeCard?.scrollIntoView?.({behavior:reduced?'auto':'smooth',block:'nearest',inline:'center'});
     try{history.replaceState(null,'','#'+id);}catch(_){}
@@ -408,6 +428,8 @@
     }
     projected.sort((a,b)=>b.l.priority-a.l.priority||a.dist-b.dist);
     const occupied=[];
+    /* Frontier desktop: show every on-screen label — no collision cull. */
+    const showAll=!isMobile&&cur==='frontier';
     const safeTop=isMobile?62:8;
     const safeBottom=isMobile?(compactLandscape?84:(INSTRUMENTS[cur].pair?154:104)):12;
     const pad=isMobile?5:8;
@@ -419,9 +441,9 @@
       const h=isMobile?(hasSub?34:26):(hasSub?38:22);
       const box={left:p.x-w/2,right:p.x+w/2,top:p.y-h,bottom:p.y};
       const oob=box.left<6||box.right>rect.width-6||box.top<safeTop||box.bottom>rect.height-safeBottom;
-      const hit=occupied.some(o=>box.left<o.right+pad&&box.right>o.left-pad&&box.top<o.bottom+pad&&box.bottom>o.top-pad);
+      const hit=!showAll&&occupied.some(o=>box.left<o.right+pad&&box.right>o.left-pad&&box.top<o.bottom+pad&&box.bottom>o.top-pad);
       if(oob||hit){l.el.style.display='none';continue;}
-      occupied.push(box);
+      if(!showAll)occupied.push(box);
       l.el.style.display='block';
       l.el.style.left=p.x+'px';
       l.el.style.top=p.y+'px';

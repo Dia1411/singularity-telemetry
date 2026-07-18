@@ -97,7 +97,15 @@ canvas.gl:active{cursor:grabbing}
 .lbl small{display:block;font-size:.68rem;font-weight:400;color:var(--dim)}
 .lbl.peak{border-color:rgba(232,90,36,.85);color:#FFB088}
 .lbl.valley{border-color:rgba(160,160,160,.55);color:#D0D0D0}
-.lbl.plane{background:transparent;border:none;font-style:italic;color:var(--dim);font-size:.8rem;transform:translate(-50%,-50%)}
+.lbl.plane{
+  background:rgba(0,0,0,.55);border:1px dashed rgba(255,255,255,.28);font-style:normal;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--dim);
+  padding:.18rem .4rem;transform:translate(-50%,-50%);
+}
+.lbl.plane.axis{
+  background:transparent;border:none;color:rgba(200,200,200,.55);font-weight:400;
+  font-size:.64rem;letter-spacing:.1em;box-shadow:none;text-shadow:0 1px 4px rgba(0,0,0,.9);
+}
 
 footer{max-width:1180px;margin:0 auto;padding:1.2rem 1.4rem 3rem;font-family:var(--mono);font-size:.64rem;color:var(--dim);line-height:1.7}
 
@@ -395,6 +403,17 @@ body.v8{overflow:hidden;height:100vh;height:100dvh;overscroll-behavior:none}
 body.v8 #controls{position:absolute;left:50%;transform:translateX(-50%);bottom:1rem}
 #view-dock{display:contents}
 .dock-grip{display:none}
+#view-banner{
+  position:absolute;right:1.1rem;top:1rem;z-index:6;max-width:min(380px,42vw);
+  background:rgba(0,0,0,.82);border:1px solid rgba(232,90,36,.4);
+  box-shadow:0 0 22px rgba(232,90,36,.12);padding:.85rem 1rem 1rem;
+  clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,12px 100%,0 calc(100% - 12px));
+  pointer-events:none;
+}
+#view-banner .vb-no{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--magenta);margin-bottom:.35rem}
+#view-banner h2{font-size:clamp(1.15rem,2.2vw,1.45rem);font-weight:650;color:#fff;line-height:1.15;margin:0 0 .45rem;
+  text-shadow:0 0 12px rgba(232,90,36,.3)}
+#view-banner p{font-size:.78rem;color:var(--ink);line-height:1.5;margin:0;opacity:.92}
 #inst-nav{position:absolute;left:1rem;top:1rem;display:flex;flex-direction:column;gap:.7rem;width:250px;z-index:5}
 .inst-card{background:var(--panel);border:1px solid rgba(160,160,160,.35);cursor:pointer;text-align:left;
   padding:.75rem .9rem;color:var(--ink);transition:border-color .15s, box-shadow .15s;
@@ -443,8 +462,12 @@ body.v8 .inst-open{position:absolute;right:1.2rem;bottom:1.1rem;width:auto;paddi
     background:rgba(255,255,255,.06)}
   .lbl{font-size:.74rem;max-width:42vw;padding:.22rem .4rem}
   .lbl small{display:none}
-  .lbl.plane{font-size:.63rem;max-width:36vw}
+  .lbl.plane{font-size:.58rem;max-width:36vw}
+  .lbl.plane.axis{font-size:.55rem;padding:0}
   .stage-hint{display:none}
+  #view-banner{left:.55rem;right:.55rem;top:.55rem;max-width:none;padding:.65rem .75rem .7rem}
+  #view-banner h2{font-size:1.05rem}
+  #view-banner p{font-size:.68rem;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
   #overlay{align-items:flex-end;padding:0}
   #overlay-panel{width:100%;max-height:calc(100dvh - env(safe-area-inset-top) - .5rem);
     padding:.9rem .9rem calc(.9rem + env(safe-area-inset-bottom));clip-path:none;
