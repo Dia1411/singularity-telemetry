@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Singularity://Telemetry</title>
+<meta name="description" content="3D telemetry of AI capability growth — the jagged frontier terrain plus three live trend instruments.">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body class="v8">
+
+<header id="app-head">
+  <span class="sys">SYS://singularity_telemetry</span>
+  <h1>Singularity<span class="g">://</span>Telemetry</h1>
+  <span class="stamp">last scan <b id="stamp">—</b></span>
+</header>
+
+<section id="stage">
+  <canvas id="gi-stage"></canvas>
+
+  <div id="view-dock">
+    <div class="dock-grip" aria-hidden="true"></div>
+    <nav id="inst-nav" aria-label="Telemetry views"></nav>
+    <button class="v-open inst-open" id="open-telemetry">View charts &amp; analysis ▸</button>
+  </div>
+
+  <div id="controls" aria-label="3D view controls">
+    <button id="ctl-reset" aria-label="Reset view" title="Reset view">⟲</button>
+    <button id="ctl-pan" aria-label="Toggle pan mode" aria-pressed="false" title="Drag moves instead of rotates">✥</button>
+    <button id="ctl-zin" aria-label="Zoom in">＋</button>
+    <button id="ctl-zout" aria-label="Zoom out">－</button>
+    <span class="ctl-label">rotation</span>
+    <input type="range" id="ctl-slider" min="0" max="1000" value="0" aria-label="Rotate">
+    <b id="ctl-value" class="ctl-value">0°</b>
+    <button id="ctl-auto" aria-label="Pause rotation" aria-pressed="true">⏸</button>
+    <button id="ctl-full" aria-label="Fullscreen">⛶</button>
+  </div>
+</section>
+
+<div id="overlay" hidden>
+  <div id="overlay-backdrop"></div>
+  <div id="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="ov-title">
+    <div class="ov-head">
+      <span class="pair-no" id="ov-no"></span>
+      <h2 id="ov-title"></h2>
+      <button id="ov-close" aria-label="Close">✕</button>
+    </div>
+    <div class="ov-duo">
+      <div class="ov-cell"><h3 class="log">Log axis · tamed</h3><div class="ov-chart"><canvas id="ov-log"></canvas></div></div>
+      <div class="ov-cell"><h3 class="lin">Linear axis · real shape</h3><div class="ov-chart"><canvas id="ov-lin"></canvas></div></div>
+    </div>
+    <p class="ov-moral" id="ov-moral"></p>
+    <p class="ov-src" id="ov-src"></p>
+  </div>
+</div>
+
+<script src="instruments.js"></script>
+</body>
+</html>

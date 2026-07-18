@@ -1,0 +1,36 @@
+name: telemetry-refresh
+
+on:
+  schedule:
+    - cron: "0 6 1,15 * *"   # 06:00 UTC on the 1st and 15th of each month
+  workflow_dispatch: {}       # manual "Run workflow" button
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run Claude research pass
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/refresh.mjs
+
+      - name: Commit updated telemetry
+        run: |
+          git config user.name "singularity-telemetry-bot"
+          git config user.email "bot@users.noreply.github.com"
+          if git diff --quiet data.json; then
+            echo "No changes — frontier held still (unlikely)."
+          else
+            git add data.json
+            git commit -m "telemetry: automated research refresh $(date -u +%F)"
+            git push
+          fi

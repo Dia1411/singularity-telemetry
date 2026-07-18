@@ -1,0 +1,279 @@
+{
+  "meta": {
+    "updatedAt": "2026-07-18",
+    "updatedBy": "Claude research session (v2 \u2014 post-METR-correction)",
+    "headline": {
+      "doublingRecent": "\u00d72 / ~3.5 mo",
+      "doublingRecentLabel": "Task-horizon doubling, Jan '24\u2013Feb '26 (METR \u2248105 days)",
+      "frontierHorizon": "16+ h",
+      "frontierHorizonLabel": "Mythos Preview \u2014 above METR's reliable measurement ceiling",
+      "computeGrowth": "4.5\u00d7 / yr",
+      "computeGrowthLabel": "Training compute growth (Epoch)",
+      "costHalving": "\u00f72 / 2 mo",
+      "costHalvingLabel": "Inference cost at fixed capability",
+      "breakpoint": "Apr 8 '24",
+      "breakpointLabel": "Fitted acceleration breakpoint (Epoch ECI)"
+    },
+    "sources": [
+      "METR \u2014 Measuring AI Ability to Complete Long Tasks + Time Horizon 1.1",
+      "Epoch AI \u2014 Trends dashboard, notable-models DB, Capabilities Index",
+      "Stanford HAI \u2014 AI Index 2026",
+      "ClockBench / BEHAVIOR-1K / a16z LLMflation"
+    ],
+    "notes": [
+      "METR corrected a regularization error in Mar 2026; late-2025/early-2026 horizons were revised down (Opus 4.6 & GPT-5.2 now cluster ~5\u20136 h).",
+      "Claude Mythos Preview measured Mar 2026 at 16+ h \u2014 beyond the current task suite's reliable ceiling. Claude Fable 5 (GA, Jun 2026) shares the same underlying model.",
+      "GPT-5.4 and Gemini 3.1 Pro are on METR's tracker (Apr 2026); exact horizons pending in public reporting."
+    ]
+  },
+  "horizon": [
+    {
+      "model": "GPT-2",
+      "date": 2019.12,
+      "seconds": 2
+    },
+    {
+      "model": "GPT-3",
+      "date": 2020.37,
+      "seconds": 9
+    },
+    {
+      "model": "GPT-3.5",
+      "date": 2022.2,
+      "seconds": 36
+    },
+    {
+      "model": "GPT-4",
+      "date": 2023.2,
+      "seconds": 240
+    },
+    {
+      "model": "GPT-4o",
+      "date": 2024.37,
+      "seconds": 360
+    },
+    {
+      "model": "Claude 3.5 Sonnet",
+      "date": 2024.79,
+      "seconds": 1200
+    },
+    {
+      "model": "o1",
+      "date": 2024.92,
+      "seconds": 2280
+    },
+    {
+      "model": "Claude 3.7 Sonnet",
+      "date": 2025.12,
+      "seconds": 3600
+    },
+    {
+      "model": "o3",
+      "date": 2025.29,
+      "seconds": 7260
+    },
+    {
+      "model": "GPT-5",
+      "date": 2025.6,
+      "seconds": 12840
+    },
+    {
+      "model": "Claude Opus 4.5",
+      "date": 2025.87,
+      "seconds": 19200
+    },
+    {
+      "model": "GPT-5.2 (high)",
+      "date": 2025.95,
+      "seconds": 23640,
+      "note": "post-correction cluster ~5\u20136 h"
+    },
+    {
+      "model": "Claude Opus 4.6",
+      "date": 2026.12,
+      "seconds": 21600,
+      "note": "revised ~6 h after METR Mar-26 correction"
+    },
+    {
+      "model": "Claude Mythos Preview (early)",
+      "date": 2026.35,
+      "seconds": 57600,
+      "note": ">16 h \u2014 above METR's reliable ceiling",
+      "flagged": true
+    }
+  ],
+  "horizonTrends": {
+    "slow": {
+      "anchorDate": 2019.12,
+      "anchorSeconds": 2,
+      "doublingMonths": 7,
+      "from": 2019,
+      "to": 2024.4,
+      "label": "\u00d72 every 7 mo (2019\u201324)"
+    },
+    "fast": {
+      "anchorDate": 2024.37,
+      "anchorSeconds": 360,
+      "doublingMonths": 3.5,
+      "from": 2024.0,
+      "to": 2026.5,
+      "label": "\u00d72 every ~3.5 mo (post-2024, METR \u2248105-day doubling)"
+    }
+  },
+  "compute": [
+    {
+      "model": "AlexNet",
+      "date": 2012.5,
+      "flop": 4.7e+17
+    },
+    {
+      "model": "GPT-2",
+      "date": 2019.1,
+      "flop": 1.9e+21
+    },
+    {
+      "model": "GPT-3",
+      "date": 2020.4,
+      "flop": 3.1e+23
+    },
+    {
+      "model": "PaLM 540B",
+      "date": 2022.3,
+      "flop": 2.5e+24
+    },
+    {
+      "model": "GPT-4",
+      "date": 2023.2,
+      "flop": 2.1e+25
+    },
+    {
+      "model": "Gemini 1.0 Ultra",
+      "date": 2023.9,
+      "flop": 5e+25
+    },
+    {
+      "model": "Llama 3.1 405B",
+      "date": 2024.5,
+      "flop": 3.8e+25
+    },
+    {
+      "model": "Grok 2",
+      "date": 2024.6,
+      "flop": 3e+25
+    },
+    {
+      "model": "Grok 3",
+      "date": 2025.1,
+      "flop": 4e+26
+    }
+  ],
+  "price": [
+    {
+      "date": 2021.9,
+      "usd": 60
+    },
+    {
+      "date": 2022.9,
+      "usd": 10
+    },
+    {
+      "date": 2023.9,
+      "usd": 0.8
+    },
+    {
+      "date": 2024.9,
+      "usd": 0.06
+    }
+  ],
+  "priceLabel": "GPT-3-class capability (MMLU \u2248 42), $ per 1M tokens \u2014 ~1,000\u00d7 drop in 3 yrs",
+  "domains": [
+    {
+      "name": "Competition math",
+      "note": "IMO gold",
+      "x": -0.78,
+      "z": -0.62,
+      "h": 2.45,
+      "s": 0.16
+    },
+    {
+      "name": "PhD science Q&A",
+      "note": "GPQA 94% vs 70%",
+      "x": -0.48,
+      "z": -0.72,
+      "h": 2.25,
+      "s": 0.17
+    },
+    {
+      "name": "Coding",
+      "note": "SWE-bench \u2248 ceiling",
+      "x": -0.58,
+      "z": -0.12,
+      "h": 2.15,
+      "s": 0.2
+    },
+    {
+      "name": "Cybersecurity",
+      "note": "93% solved",
+      "x": -0.3,
+      "z": -0.34,
+      "h": 2.05,
+      "s": 0.15
+    },
+    {
+      "name": "Chemistry",
+      "note": "beats human chemists",
+      "x": -0.66,
+      "z": -0.88,
+      "h": 1.95,
+      "s": 0.13
+    },
+    {
+      "name": "Writing & translation",
+      "note": "near expert",
+      "x": -0.12,
+      "z": -0.58,
+      "h": 1.55,
+      "s": 0.22
+    },
+    {
+      "name": "Computer use",
+      "note": "OSWorld 66% vs 72%",
+      "x": -0.06,
+      "z": 0.34,
+      "h": 0.92,
+      "s": 0.18
+    },
+    {
+      "name": "Long-horizon messy work",
+      "note": "reliability gap",
+      "x": 0.18,
+      "z": 0.16,
+      "h": 0.78,
+      "s": 0.26
+    },
+    {
+      "name": "Analog clocks",
+      "note": "50.1% vs 90.1%",
+      "x": 0.42,
+      "z": -0.28,
+      "h": 0.48,
+      "s": 0.14
+    },
+    {
+      "name": "Household robotics",
+      "note": "12.4% success",
+      "x": 0.62,
+      "z": 0.62,
+      "h": 0.14,
+      "s": 0.22
+    },
+    {
+      "name": "Physical dexterity",
+      "note": "far below human",
+      "x": 0.86,
+      "z": 0.3,
+      "h": 0.1,
+      "s": 0.2
+    }
+  ]
+}
