@@ -1,12 +1,12 @@
 {
   "meta": {
     "updatedAt": "2026-07-18",
-    "updatedBy": "automated Claude research pass",
+    "updatedBy": "manual research — METR TH1.1 + Epoch ECI→horizon conversions for unmeasured models",
     "headline": {
       "doublingRecent": "×2 / ~4.3 mo",
       "doublingRecentLabel": "Task-horizon doubling, post-2023 (METR TH1.1 ≈130.8 days)",
       "frontierHorizon": "16+ h",
-      "frontierHorizonLabel": "Claude Mythos Preview — above METR's reliable measurement ceiling",
+      "frontierHorizonLabel": "Mythos Preview — above METR's reliable measurement ceiling",
       "computeGrowth": "5× / yr",
       "computeGrowthLabel": "Training compute growth since 2020 (Epoch AI trends, updated Feb 2026)",
       "costHalving": "÷2 / 2 mo",
@@ -21,13 +21,11 @@
       "ClockBench / BEHAVIOR-1K / a16z LLMflation"
     ],
     "notes": [
-      "METR TH1.1 (Jan 2026) revised post-2023 doubling time to 130.8 days (~4.3 months), slightly slower than the prior ~105-day estimate but still faster than the pre-2024 7-month baseline.",
-      "METR corrected a regularization error on Mar 3 2026; late-2025/early-2026 horizons were revised. Claude Opus 4.6 settled at ~6 h post-correction; GPT-5.2 cluster remains ~5–6 h.",
-      "Claude Mythos Preview (added May 8 2026) measured at ≥16 h on 50% horizon, 3 h 6 min on 80% horizon. METR explicitly flags measurements above 16 h as unreliable with the current TH1.1 suite.",
-      "Epoch AI confirms Grok 4 (~5e26 FLOP, Jul 2025) as the largest known training run to date, superseding Grok 3 (~4e26 FLOP) which was the first model to cross the 1e26 FLOP threshold.",
-      "GPT-5 Epoch estimate: ~3e25 FLOP pretrain (median); exact compute unconfirmed by OpenAI.",
-      "Compute growth headline updated to 5×/yr per Epoch AI trends dashboard (frontier LLMs since 2020).",
-      "Stanford HAI AI Index 2026 (Apr 13 2026): GPQA frontier reached 93% vs 81.2% expert baseline; SWE-bench Verified climbed from 60% to near 100% of human baseline in a single year; ClockBench 50.1% vs 90.1% confirmed."
+      "Solid points: METR 50% time-horizon (TH1.1) where published.",
+      "Open-weight / recent xAI models without a METR run (GLM-4.6→5.2, Grok 4.20/4.3/4.5, Kimi K2.5/2.6, DeepSeek-V4-Pro, Qwen3.7-Max) use Epoch ECI → METR minutes via the pooled fit ln(TH)=−18.52+0.159·ECI (joansam/metr-chart). Marked in notes — not direct METR measurements.",
+      "METR explicitly lists Grok 4.3, GPT-5.5, Claude Opus 4.7 as not yet measured on their tracker.",
+      "GPT-5.4 standard methodology penalizes reward-hacking (≈5.7 h); allowing reward hacks ≈13 h (METR).",
+      "Claude Mythos Preview (early) remains above METR's 16 h reliability ceiling."
     ]
   },
   "horizon": [
@@ -57,6 +55,12 @@
       "seconds": 360
     },
     {
+      "model": "Qwen2.5-72B",
+      "date": 2024.72,
+      "seconds": 1140,
+      "note": "Alibaba open weights — METR tracker"
+    },
+    {
       "model": "Claude 3.5 Sonnet",
       "date": 2024.79,
       "seconds": 1200
@@ -64,74 +68,167 @@
     {
       "model": "o1",
       "date": 2024.92,
-      "seconds": 2280
+      "seconds": 2330
+    },
+    {
+      "model": "DeepSeek-V3",
+      "date": 2024.99,
+      "seconds": 1080,
+      "note": "Chinese open MoE — METR tracker"
     },
     {
       "model": "Claude 3.7 Sonnet",
       "date": 2025.12,
-      "seconds": 3600,
-      "note": "Added to METR Apr 4 2025; ~59 min per METR TH1.1"
+      "seconds": 3600
     },
     {
       "model": "o3",
       "date": 2025.29,
-      "seconds": 7260,
-      "note": "Added to METR Apr 16 2025"
+      "seconds": 7184
+    },
+    {
+      "model": "DeepSeek-R1",
+      "date": 2025.41,
+      "seconds": 1920,
+      "note": "R1-0528 open reasoning — METR tracker"
     },
     {
       "model": "Grok-4",
-      "date": 2025.55,
-      "seconds": 10800,
-      "note": "Added to METR Jul 20 2025; exact published horizon not yet confirmed in public data; ~3 h interpolated from trend"
+      "date": 2025.52,
+      "seconds": 6540,
+      "note": "xAI — METR Jul 2025 (1 h 49 m)"
+    },
+    {
+      "model": "gpt-oss-120b",
+      "date": 2025.59,
+      "seconds": 2700,
+      "note": "OpenAI open-weight — METR tracker"
     },
     {
       "model": "GPT-5",
       "date": 2025.6,
-      "seconds": 8220,
-      "note": "METR published ~2 h 17 min (added Aug 6 2025)"
+      "seconds": 12181
+    },
+    {
+      "model": "GLM-4.6",
+      "date": 2025.75,
+      "seconds": 2800,
+      "note": "ECI→METR inferred (Epoch ECI 140.95; no direct METR run)"
+    },
+    {
+      "model": "Kimi K2 Thinking",
+      "date": 2025.88,
+      "seconds": 3480,
+      "note": "Moonshot open MoE — METR tracker"
+    },
+    {
+      "model": "GPT-5.1-Codex-Max",
+      "date": 2025.88,
+      "seconds": 13423
     },
     {
       "model": "Claude Opus 4.5",
-      "date": 2025.97,
-      "seconds": 19200,
-      "note": "Added to METR Dec 19 2025"
+      "date": 2025.9,
+      "seconds": 17580
     },
     {
       "model": "GPT-5.2 (high)",
-      "date": 2026.09,
-      "seconds": 23640,
-      "note": "Added to METR Feb 4 2026; post-correction cluster ~5–6 h"
+      "date": 2025.94,
+      "seconds": 21135
+    },
+    {
+      "model": "GLM-4.7",
+      "date": 2025.97,
+      "seconds": 4353,
+      "note": "ECI→METR inferred (Epoch ECI 143.73; no direct METR run)"
+    },
+    {
+      "model": "Kimi K2.5",
+      "date": 2026.07,
+      "seconds": 8904,
+      "note": "ECI→METR inferred (Epoch ECI 148.24)"
     },
     {
       "model": "GPT-5.3-Codex",
-      "date": 2026.13,
-      "seconds": 23400,
-      "note": "Added to METR Feb 20 2026; METR published 6.5 h on 'high' scaffold"
+      "date": 2026.09,
+      "seconds": 20972
     },
     {
       "model": "Claude Opus 4.6",
-      "date": 2026.13,
-      "seconds": 21600,
-      "note": "Added to METR Feb 20 2026; revised ~6 h after METR Mar 3 2026 regularization correction"
+      "date": 2026.09,
+      "seconds": 43128
     },
     {
-      "model": "GPT-5.4",
-      "date": 2026.27,
-      "seconds": 32400,
-      "note": "Added to METR Apr 10 2026; exact horizon not yet confirmed in public reporting"
+      "model": "GLM-5",
+      "date": 2026.11,
+      "seconds": 6639,
+      "note": "ECI→METR inferred (Epoch ECI 146.39; no direct METR run)"
+    },
+    {
+      "model": "Grok 4.20",
+      "date": 2026.13,
+      "seconds": 17672,
+      "note": "ECI→METR inferred (Epoch ECI 152.56; no direct METR run)"
     },
     {
       "model": "Gemini 3.1 Pro",
-      "date": 2026.29,
-      "seconds": 39600,
-      "note": "Added to METR Apr 15 2026; community pre-METR estimates ~11 h; exact official figure pending public release"
+      "date": 2026.13,
+      "seconds": 23049
+    },
+    {
+      "model": "GPT-5.4",
+      "date": 2026.18,
+      "seconds": 20504,
+      "note": "standard METR scoring (reward-hacks = fail); ≈13 h if reward hacks allowed"
+    },
+    {
+      "model": "GLM-5.1",
+      "date": 2026.27,
+      "seconds": 12524,
+      "note": "ECI→METR inferred (Epoch ECI 150.39; no direct METR run)"
     },
     {
       "model": "Claude Mythos Preview (early)",
-      "date": 2026.35,
-      "seconds": 57600,
-      "note": "Added to METR May 8 2026; ≥16 h on 50% horizon, 3 h 6 min on 80% horizon — above METR's reliable measurement ceiling",
+      "date": 2026.27,
+      "seconds": 62687,
+      "note": ">16 h — above METR's reliable ceiling",
       "flagged": true
+    },
+    {
+      "model": "Grok 4.3 Beta",
+      "date": 2026.29,
+      "seconds": 10013,
+      "note": "ECI→METR inferred — METR lists Grok 4.3 as not yet measured"
+    },
+    {
+      "model": "Kimi K2.6",
+      "date": 2026.3,
+      "seconds": 13840,
+      "note": "ECI→METR inferred (Epoch ECI 151.02)"
+    },
+    {
+      "model": "DeepSeek-V4-Pro",
+      "date": 2026.31,
+      "seconds": 11296,
+      "note": "ECI→METR inferred (Epoch ECI 149.74)"
+    },
+    {
+      "model": "Qwen3.7-Max",
+      "date": 2026.38,
+      "seconds": 19101,
+      "note": "ECI→METR inferred (Epoch ECI 153.05)"
+    },
+    {
+      "model": "GLM-5.2",
+      "date": 2026.46,
+      "seconds": 15175,
+      "note": "ECI→METR inferred (Epoch ECI 151.6; pooled fit, ~4.2 h)"
+    },
+    {
+      "model": "Grok 4.5",
+      "date": 2026.52,
+      "seconds": 19468,
+      "note": "ECI→METR inferred (Epoch ECI 153.17; released Jul 2026, no METR run yet)"
     }
   ],
   "horizonTrends": {
@@ -148,7 +245,7 @@
       "anchorSeconds": 360,
       "doublingMonths": 4.3,
       "from": 2024,
-      "to": 2026.5,
+      "to": 2026.7,
       "label": "×2 every ~4.3 mo (post-2023, METR TH1.1 = 130.8 days)"
     }
   },
@@ -156,7 +253,7 @@
     {
       "model": "AlexNet",
       "date": 2012.5,
-      "flop": 470000000000000000
+      "flop": 4.7e+17
     },
     {
       "model": "GPT-2",
@@ -194,22 +291,51 @@
       "flop": 3e+25
     },
     {
-      "model": "Grok 3",
-      "date": 2025.1,
-      "flop": 4e+26,
-      "note": "First model confirmed above 1e26 FLOP threshold (Epoch AI)"
+      "model": "DeepSeek-V3",
+      "date": 2024.99,
+      "flop": 3e+24,
+      "note": "Epoch ≈3e24 FLOP (671B MoE, 37B active)"
     },
     {
-      "model": "GPT-5",
-      "date": 2025.6,
-      "flop": 3e+25,
-      "note": "Epoch AI median pretrain estimate ~3e25 FLOP; exact figure not disclosed by OpenAI"
+      "model": "Grok 3",
+      "date": 2025.1,
+      "flop": 4e+26
     },
     {
       "model": "Grok 4",
-      "date": 2025.55,
+      "date": 2025.52,
       "flop": 5e+26,
-      "note": "Largest known training run to date per Epoch AI trends dashboard (Jul 2026)"
+      "note": "Epoch/industry ≈5e26; RL scaled to pretraining compute"
+    },
+    {
+      "model": "Kimi K2",
+      "date": 2025.53,
+      "flop": 1e+25,
+      "note": "≈1T MoE open weights; ~1e25 FLOP order-of-magnitude"
+    },
+    {
+      "model": "GLM-4.6",
+      "date": 2025.75,
+      "flop": 4.42e+24,
+      "note": "Epoch / Z.ai disclosure order-of-magnitude"
+    },
+    {
+      "model": "GLM-4.7",
+      "date": 2025.97,
+      "flop": 4.42e+24,
+      "note": "Epoch training compute estimate"
+    },
+    {
+      "model": "Kimi K2.5",
+      "date": 2026.07,
+      "flop": 5.8e+24,
+      "note": "Epoch training compute"
+    },
+    {
+      "model": "DeepSeek-V4-Pro",
+      "date": 2026.31,
+      "flop": 9.7e+24,
+      "note": "Epoch training compute estimate"
     }
   ],
   "price": [

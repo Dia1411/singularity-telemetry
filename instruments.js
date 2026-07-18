@@ -124,8 +124,11 @@
   /* Prefer milestones / isolated peaks when screen-space labels collide. */
   function bumpLabelPriority(entries,i,fl){
     if(fl)return 5;
+    const e=entries[i], name=e.m||'';
+    /* Keep open-weight / xAI / GLM names visible — they sit low on the linear axis. */
+    if(/^(GLM|Grok|DeepSeek|Kimi|Qwen|gpt-oss)/i.test(name))return 4;
     if(i===0||i===entries.length-1)return 4;
-    const t=entries[i].t,h=entries[i].h;
+    const t=e.t,h=e.h;
     const gapL=i>0?t-entries[i-1].t:9,gapR=i<entries.length-1?entries[i+1].t-t:9;
     if(Math.min(gapL,gapR)>=.45)return 4;
     const peak=(i===0||h>=entries[i-1].h-.02)&&(i===entries.length-1||h>=entries[i+1].h-.02);
@@ -256,7 +259,7 @@
       no:'INSTRUMENT I',name:'Task Horizon',
       desc:'time × model × how long AI works alone — linear seconds, not log. Pre-2024 is a flat floor; the seam is the Apr-2024 breakpoint; grids at 8 h and METR\u2019s 16 h ceiling.',
       pair:'horizon',
-      built:buildTerrain('horizon',{tRange:[2019,2026.6],camR:62,seamT:BR,
+      built:buildTerrain('horizon',{tRange:[2019,2026.7],camR:62,seamT:BR,
         entries:hPts.map(p=>({t:p.x,m:p.m,sub:humanTime(p.y),h:clamp(p.y/HCEIL,0,1.05),fl:p.fl})),
         trendH:t=>clamp(trS(t)/HCEIL,0,1.05),
         planes:[
@@ -265,9 +268,9 @@
         ]})},
     compute:{
       no:'INSTRUMENT II',name:'Compute Skyline',
-      desc:'time × model × training FLOP. Nine orders of magnitude, AlexNet\u2019s foothill to Grok 3\u2019s summit; grids at 10²⁰/10²³/10²⁶.',
+      desc:'time × model × training FLOP. Nine orders of magnitude, AlexNet\u2019s foothill to Grok 4\u2019s summit; Chinese open MoEs (DeepSeek, GLM, Kimi) sit far below closed compute; grids at 10²⁰/10²³/10²⁶.',
       pair:'compute',
-      built:buildTerrain('compute',{tRange:[2012,2025.6],camR:62,seamT:null,yearStep:2,
+      built:buildTerrain('compute',{tRange:[2012,2026.5],camR:62,seamT:null,yearStep:2,
         entries:cPts.map(c=>({t:c.x,m:c.m,sub:c.y.toExponential(1)+' FLOP',h:clamp((Math.log10(c.y)-16)/11,0,1)})),
         trendH:t=>clamp((Math.log10(D.compute[0].flop*Math.pow(4.5,t-D.compute[0].date))-16)/11,0,1),
         planes:[{h:(20-16)/11,color:0x8A8A8A,label:'10²⁰ FLOP'},{h:(23-16)/11,color:0xC45A2A,label:'10²³ FLOP'},{h:(26-16)/11,color:0xE85A24,label:'10²⁶ FLOP'}]})},
