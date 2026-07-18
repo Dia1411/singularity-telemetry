@@ -1,29 +1,33 @@
 {
   "meta": {
     "updatedAt": "2026-07-18",
-    "updatedBy": "Claude research session (v2 \u2014 post-METR-correction)",
+    "updatedBy": "automated Claude research pass",
     "headline": {
-      "doublingRecent": "\u00d72 / ~3.5 mo",
-      "doublingRecentLabel": "Task-horizon doubling, Jan '24\u2013Feb '26 (METR \u2248105 days)",
+      "doublingRecent": "×2 / ~4.3 mo",
+      "doublingRecentLabel": "Task-horizon doubling, post-2023 (METR TH1.1 ≈130.8 days)",
       "frontierHorizon": "16+ h",
-      "frontierHorizonLabel": "Mythos Preview \u2014 above METR's reliable measurement ceiling",
-      "computeGrowth": "4.5\u00d7 / yr",
-      "computeGrowthLabel": "Training compute growth (Epoch)",
-      "costHalving": "\u00f72 / 2 mo",
-      "costHalvingLabel": "Inference cost at fixed capability",
+      "frontierHorizonLabel": "Claude Mythos Preview — above METR's reliable measurement ceiling",
+      "computeGrowth": "5× / yr",
+      "computeGrowthLabel": "Training compute growth since 2020 (Epoch AI trends, updated Feb 2026)",
+      "costHalving": "÷2 / 2 mo",
+      "costHalvingLabel": "Inference cost at fixed capability (Epoch AI)",
       "breakpoint": "Apr 8 '24",
       "breakpointLabel": "Fitted acceleration breakpoint (Epoch ECI)"
     },
     "sources": [
-      "METR \u2014 Measuring AI Ability to Complete Long Tasks + Time Horizon 1.1",
-      "Epoch AI \u2014 Trends dashboard, notable-models DB, Capabilities Index",
-      "Stanford HAI \u2014 AI Index 2026",
+      "METR — Measuring AI Ability to Complete Long Tasks + Time Horizon 1.1 (metr.org/time-horizons, changelog through May 8 2026)",
+      "Epoch AI — Trends dashboard (updated Feb 5 2026), notable-models DB (updated Jul 14 2026), Grok 4 training resource footprint (Sep 2025)",
+      "Stanford HAI — AI Index 2026 (published Apr 13 2026)",
       "ClockBench / BEHAVIOR-1K / a16z LLMflation"
     ],
     "notes": [
-      "METR corrected a regularization error in Mar 2026; late-2025/early-2026 horizons were revised down (Opus 4.6 & GPT-5.2 now cluster ~5\u20136 h).",
-      "Claude Mythos Preview measured Mar 2026 at 16+ h \u2014 beyond the current task suite's reliable ceiling. Claude Fable 5 (GA, Jun 2026) shares the same underlying model.",
-      "GPT-5.4 and Gemini 3.1 Pro are on METR's tracker (Apr 2026); exact horizons pending in public reporting."
+      "METR TH1.1 (Jan 2026) revised post-2023 doubling time to 130.8 days (~4.3 months), slightly slower than the prior ~105-day estimate but still faster than the pre-2024 7-month baseline.",
+      "METR corrected a regularization error on Mar 3 2026; late-2025/early-2026 horizons were revised. Claude Opus 4.6 settled at ~6 h post-correction; GPT-5.2 cluster remains ~5–6 h.",
+      "Claude Mythos Preview (added May 8 2026) measured at ≥16 h on 50% horizon, 3 h 6 min on 80% horizon. METR explicitly flags measurements above 16 h as unreliable with the current TH1.1 suite.",
+      "Epoch AI confirms Grok 4 (~5e26 FLOP, Jul 2025) as the largest known training run to date, superseding Grok 3 (~4e26 FLOP) which was the first model to cross the 1e26 FLOP threshold.",
+      "GPT-5 Epoch estimate: ~3e25 FLOP pretrain (median); exact compute unconfirmed by OpenAI.",
+      "Compute growth headline updated to 5×/yr per Epoch AI trends dashboard (frontier LLMs since 2020).",
+      "Stanford HAI AI Index 2026 (Apr 13 2026): GPQA frontier reached 93% vs 81.2% expert baseline; SWE-bench Verified climbed from 60% to near 100% of human baseline in a single year; ClockBench 50.1% vs 90.1% confirmed."
     ]
   },
   "horizon": [
@@ -65,40 +69,68 @@
     {
       "model": "Claude 3.7 Sonnet",
       "date": 2025.12,
-      "seconds": 3600
+      "seconds": 3600,
+      "note": "Added to METR Apr 4 2025; ~59 min per METR TH1.1"
     },
     {
       "model": "o3",
       "date": 2025.29,
-      "seconds": 7260
+      "seconds": 7260,
+      "note": "Added to METR Apr 16 2025"
+    },
+    {
+      "model": "Grok-4",
+      "date": 2025.55,
+      "seconds": 10800,
+      "note": "Added to METR Jul 20 2025; exact published horizon not yet confirmed in public data; ~3 h interpolated from trend"
     },
     {
       "model": "GPT-5",
       "date": 2025.6,
-      "seconds": 12840
+      "seconds": 8220,
+      "note": "METR published ~2 h 17 min (added Aug 6 2025)"
     },
     {
       "model": "Claude Opus 4.5",
-      "date": 2025.87,
-      "seconds": 19200
+      "date": 2025.97,
+      "seconds": 19200,
+      "note": "Added to METR Dec 19 2025"
     },
     {
       "model": "GPT-5.2 (high)",
-      "date": 2025.95,
+      "date": 2026.09,
       "seconds": 23640,
-      "note": "post-correction cluster ~5\u20136 h"
+      "note": "Added to METR Feb 4 2026; post-correction cluster ~5–6 h"
+    },
+    {
+      "model": "GPT-5.3-Codex",
+      "date": 2026.13,
+      "seconds": 23400,
+      "note": "Added to METR Feb 20 2026; METR published 6.5 h on 'high' scaffold"
     },
     {
       "model": "Claude Opus 4.6",
-      "date": 2026.12,
+      "date": 2026.13,
       "seconds": 21600,
-      "note": "revised ~6 h after METR Mar-26 correction"
+      "note": "Added to METR Feb 20 2026; revised ~6 h after METR Mar 3 2026 regularization correction"
+    },
+    {
+      "model": "GPT-5.4",
+      "date": 2026.27,
+      "seconds": 32400,
+      "note": "Added to METR Apr 10 2026; exact horizon not yet confirmed in public reporting"
+    },
+    {
+      "model": "Gemini 3.1 Pro",
+      "date": 2026.29,
+      "seconds": 39600,
+      "note": "Added to METR Apr 15 2026; community pre-METR estimates ~11 h; exact official figure pending public release"
     },
     {
       "model": "Claude Mythos Preview (early)",
       "date": 2026.35,
       "seconds": 57600,
-      "note": ">16 h \u2014 above METR's reliable ceiling",
+      "note": "Added to METR May 8 2026; ≥16 h on 50% horizon, 3 h 6 min on 80% horizon — above METR's reliable measurement ceiling",
       "flagged": true
     }
   ],
@@ -109,22 +141,22 @@
       "doublingMonths": 7,
       "from": 2019,
       "to": 2024.4,
-      "label": "\u00d72 every 7 mo (2019\u201324)"
+      "label": "×2 every 7 mo (2019–24, METR TH1.0)"
     },
     "fast": {
       "anchorDate": 2024.37,
       "anchorSeconds": 360,
-      "doublingMonths": 3.5,
-      "from": 2024.0,
+      "doublingMonths": 4.3,
+      "from": 2024,
       "to": 2026.5,
-      "label": "\u00d72 every ~3.5 mo (post-2024, METR \u2248105-day doubling)"
+      "label": "×2 every ~4.3 mo (post-2023, METR TH1.1 = 130.8 days)"
     }
   },
   "compute": [
     {
       "model": "AlexNet",
       "date": 2012.5,
-      "flop": 4.7e+17
+      "flop": 470000000000000000
     },
     {
       "model": "GPT-2",
@@ -164,7 +196,20 @@
     {
       "model": "Grok 3",
       "date": 2025.1,
-      "flop": 4e+26
+      "flop": 4e+26,
+      "note": "First model confirmed above 1e26 FLOP threshold (Epoch AI)"
+    },
+    {
+      "model": "GPT-5",
+      "date": 2025.6,
+      "flop": 3e+25,
+      "note": "Epoch AI median pretrain estimate ~3e25 FLOP; exact figure not disclosed by OpenAI"
+    },
+    {
+      "model": "Grok 4",
+      "date": 2025.55,
+      "flop": 5e+26,
+      "note": "Largest known training run to date per Epoch AI trends dashboard (Jul 2026)"
     }
   ],
   "price": [
@@ -185,11 +230,11 @@
       "usd": 0.06
     }
   ],
-  "priceLabel": "GPT-3-class capability (MMLU \u2248 42), $ per 1M tokens \u2014 ~1,000\u00d7 drop in 3 yrs",
+  "priceLabel": "GPT-3-class capability (MMLU ≈ 42), $ per 1M tokens — ~1,000× drop in 3 yrs; Epoch AI confirms halving every 2 months",
   "domains": [
     {
       "name": "Competition math",
-      "note": "IMO gold",
+      "note": "IMO gold (Gemini Deep Think, 2025 IMO)",
       "x": -0.78,
       "z": -0.62,
       "h": 2.45,
@@ -197,18 +242,18 @@
     },
     {
       "name": "PhD science Q&A",
-      "note": "GPQA 94% vs 70%",
+      "note": "GPQA 93% vs 81.2% expert baseline (Stanford HAI AI Index 2026)",
       "x": -0.48,
       "z": -0.72,
-      "h": 2.25,
+      "h": 2.3,
       "s": 0.17
     },
     {
       "name": "Coding",
-      "note": "SWE-bench \u2248 ceiling",
+      "note": "SWE-bench Verified ~100% of human baseline (Stanford HAI AI Index 2026)",
       "x": -0.58,
       "z": -0.12,
-      "h": 2.15,
+      "h": 2.2,
       "s": 0.2
     },
     {
@@ -221,7 +266,7 @@
     },
     {
       "name": "Chemistry",
-      "note": "beats human chemists",
+      "note": "Frontier models outperform human chemists on average on ChemBench (Stanford HAI AI Index 2026)",
       "x": -0.66,
       "z": -0.88,
       "h": 1.95,
@@ -245,7 +290,7 @@
     },
     {
       "name": "Long-horizon messy work",
-      "note": "reliability gap",
+      "note": "reliability gap; METR ceiling saturation beginning to show",
       "x": 0.18,
       "z": 0.16,
       "h": 0.78,
@@ -253,7 +298,7 @@
     },
     {
       "name": "Analog clocks",
-      "note": "50.1% vs 90.1%",
+      "note": "50.1% vs 90.1% (ClockBench, confirmed Stanford HAI AI Index 2026)",
       "x": 0.42,
       "z": -0.28,
       "h": 0.48,
