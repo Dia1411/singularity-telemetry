@@ -7,7 +7,7 @@
   let isMobile=mobileMQ.matches;
   const lerp=(a,b,t)=>a+(b-a)*t, clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
-  const CY='#00F0FF', MG='#FF2BD6', GN='#3DFFA8', VI='#B08CFF', DIM='#9AA5D6', GRID='rgba(122,133,196,.22)';
+  const CY='#E85A24', MG='#FF7A3D', GN='#E07040', VI='#C45A2A', DIM='#8A8A8A', GRID='rgba(160,160,160,.22)';
   const humanTime=s=>s<60?Math.round(s)+' s':s<3600?Math.round(s/60)+' min':(s/3600).toFixed(1)+' h';
   const hPts=D.horizon.map(d=>({x:d.date,y:d.seconds,m:d.model,note:d.note,fl:!!d.flagged}));
   const cPts=D.compute.map(d=>({x:d.date,y:d.flop,m:d.model}));
@@ -32,7 +32,7 @@
         options:{...common,scales:{x:{type:'linear',min:2018.8,max:2026.8,ticks:{stepSize:1,callback:yearTick},grid:{color:GRID}},
           y:{type:'logarithmic',min:1,max:300000,grid:{color:GRID},ticks:{callback:v=>({1:'1 s',10:'10 s',60:'1 min',600:'10 min',3600:'1 h',28800:'8 h',57600:'16 h'})[v]??null}}},
           plugins:{...common.plugins,tooltip:{callbacks:{label:c=>c.raw.m?c.raw.m+' — '+humanTime(c.raw.y)+(c.raw.note?' ('+c.raw.note+')':''):humanTime(c.raw.y)}}}}};
-      return{type:'line',data:{datasets:[{data:hPts.map(p=>({x:p.x,y:p.y/3600,m:p.m,note:p.note})),borderColor:MG,backgroundColor:MG,borderWidth:2.2,pointRadius:3.2,tension:.25,fill:{target:'origin',above:'rgba(255,43,214,.08)'}}]},
+      return{type:'line',data:{datasets:[{data:hPts.map(p=>({x:p.x,y:p.y/3600,m:p.m,note:p.note})),borderColor:MG,backgroundColor:MG,borderWidth:2.2,pointRadius:3.2,tension:.25,fill:{target:'origin',above:'rgba(232,90,36,.1)'}}]},
         options:{...common,scales:{x:{type:'linear',min:2018.8,max:2026.8,ticks:{stepSize:1,callback:yearTick},grid:{color:GRID}},
           y:{min:0,grid:{color:GRID},ticks:{callback:v=>v+' h'}}},
           plugins:{...common.plugins,tooltip:{callbacks:{label:c=>c.raw.m+' — '+c.parsed.y.toFixed(2)+' h'+(c.raw.note?' ('+c.raw.note+')':'')}}}}};
@@ -44,7 +44,7 @@
         options:{...common,scales:{x:{type:'linear',min:2011.5,max:2026.2,ticks:{stepSize:2,callback:yearTick},grid:{color:GRID}},
           y:{type:'logarithmic',min:1e17,max:1e27,grid:{color:GRID},ticks:{callback:v=>{const e=Math.log10(v);return Number.isInteger(e)&&e%2===1?'1e'+e:null}}}},
           plugins:{...common.plugins,tooltip:{callbacks:{label:c=>c.raw.m?c.raw.m+' — '+c.raw.y.toExponential(1)+' FLOP':''}}}}};
-      return{type:'line',data:{datasets:[{data:cPts.map(p=>({x:p.x,y:p.y/1e25,m:p.m})),borderColor:CY,backgroundColor:CY,borderWidth:2.2,pointRadius:3.2,tension:.25,fill:{target:'origin',above:'rgba(0,240,255,.07)'}}]},
+      return{type:'line',data:{datasets:[{data:cPts.map(p=>({x:p.x,y:p.y/1e25,m:p.m})),borderColor:CY,backgroundColor:CY,borderWidth:2.2,pointRadius:3.2,tension:.25,fill:{target:'origin',above:'rgba(232,90,36,.08)'}}]},
         options:{...common,scales:{x:{type:'linear',min:2011.5,max:2026.2,ticks:{stepSize:2,callback:yearTick},grid:{color:GRID}},
           y:{min:0,max:Math.ceil(cMaxLin*1.05),grid:{color:GRID},ticks:{callback:v=>v+'e25'}}},
           plugins:{...common.plugins,tooltip:{callbacks:{label:c=>c.raw.m+' — '+c.parsed.y.toFixed(3)+' ×10²⁵ FLOP'}}}}};
@@ -54,13 +54,13 @@
       options:{...common,scales:{x:{type:'linear',...span,ticks:{stepSize:1,callback:yearTick},grid:{color:GRID}},
         y:{type:'logarithmic',min:.01,max:100,grid:{color:GRID},ticks:{callback:v=>[0.01,0.1,1,10,100].includes(v)?'$'+v:null}}},
         plugins:{...common.plugins,tooltip:{callbacks:{label:c=>'≈$'+c.parsed.y+' /M tokens'}}}}};
-    return{type:'line',data:{datasets:[{data:pPts,borderColor:GN,backgroundColor:GN,borderWidth:2.2,pointRadius:3.2,tension:.25,fill:{target:'origin',above:'rgba(61,255,168,.07)'}}]},
+    return{type:'line',data:{datasets:[{data:pPts,borderColor:GN,backgroundColor:GN,borderWidth:2.2,pointRadius:3.2,tension:.25,fill:{target:'origin',above:'rgba(232,90,36,.08)'}}]},
       options:{...common,scales:{x:{type:'linear',...span,ticks:{stepSize:1,callback:yearTick},grid:{color:GRID}},
         y:{min:0,grid:{color:GRID},ticks:{callback:v=>'$'+v}}},
         plugins:{...common.plugins,tooltip:{callbacks:{label:c=>'≈$'+c.parsed.y+' /M tokens'}}}}};
   }
   const PAIRS={
-    horizon:{no:'PAIR I',title:'Task Horizon',moral:'Six of seven years round to zero on the linear axis. The violet point is Claude Mythos Preview — 16+ hours, above METR\u2019s measurement ceiling. Post-2024 doubling: every ~3.5 months.',src:'METR Time Horizon tracker (post Mar-26 correction).'},
+    horizon:{no:'PAIR I',title:'Task Horizon',moral:'Six of seven years round to zero on the linear axis. The flagged point is Claude Mythos Preview — 16+ hours, above METR\u2019s measurement ceiling. Post-2024 doubling: every ~3.5 months.',src:'METR Time Horizon tracker (post Mar-26 correction).'},
     compute:{no:'PAIR II',title:'Training Compute',moral:'Nine orders of magnitude in thirteen years. On the honest axis every model before 2023 is the same dot on the floor.',src:'Epoch AI notable-models database · ~4.5× per year.'},
     price:{no:'PAIR III',title:'Cost of Fixed Capability',moral:'A 1,000× collapse isn\u2019t a decline — it\u2019s a cliff followed by years of zero.',src:'Epoch AI price trends · a16z LLMflation · halving ≈ every 2 months.'}};
   const overlay=document.getElementById('overlay'); let ovCharts=[],lastFocus=null;
@@ -102,23 +102,35 @@
   const canvas=document.getElementById('gi-stage');
   const cw=()=>canvas.clientWidth||innerWidth, ch=()=>canvas.clientHeight||600;
   const scene=new THREE.Scene();
-  scene.background=new THREE.Color(0x07051A);
-  scene.fog=new THREE.FogExp2(0x0A0724,0.009);
+  scene.background=new THREE.Color(0x000000);
+  scene.fog=new THREE.FogExp2(0x000000,0.008);
   const camera=new THREE.PerspectiveCamera(isMobile?56:44,cw()/ch(),.1,600);
   const renderer=new THREE.WebGLRenderer({canvas,antialias:!isMobile});
   renderer.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.35:2));
   renderer.setSize(cw(),ch(),false);
-  scene.add(new THREE.AmbientLight(0x4a4a8a,.85));
-  const lM=new THREE.PointLight(0xFF2BD6,1.0,220);lM.position.set(-30,50,-20);scene.add(lM);
-  const lC=new THREE.PointLight(0x00F0FF,.9,220);lC.position.set(36,30,36);scene.add(lC);
+  scene.add(new THREE.AmbientLight(0xffffff,.4));
+  const lM=new THREE.PointLight(0xE85A24,1.1,220);lM.position.set(-30,50,-20);scene.add(lM);
+  const lC=new THREE.PointLight(0xFF7A3D,.7,220);lC.position.set(36,30,36);scene.add(lC);
 
-  const allLabels=[]; /* {el,v,inst} */
-  function addLabel(inst,cls,html,x,y,z){
+  const allLabels=[]; /* {el,v,inst,priority} */
+  function addLabel(inst,cls,html,x,y,z,prio){
     const el=document.createElement('div');
     el.className='lbl '+cls;el.innerHTML=html;el.style.position='absolute';
     stageEl.appendChild(el);
-    const priority=cls==='peak'?4:cls==='valley'?3:cls==='plane'?1:2;
+    const priority=prio??(cls==='peak'?4:cls==='valley'?3:cls==='plane'?1:2);
     allLabels.push({el,v:new THREE.Vector3(x,y,z),inst,priority,anchorY:cls==='plane'?'-50%':'-100%'});
+  }
+
+  /* Prefer milestones / isolated peaks when screen-space labels collide. */
+  function bumpLabelPriority(entries,i,fl){
+    if(fl)return 5;
+    if(i===0||i===entries.length-1)return 4;
+    const t=entries[i].t,h=entries[i].h;
+    const gapL=i>0?t-entries[i-1].t:9,gapR=i<entries.length-1?entries[i+1].t-t:9;
+    if(Math.min(gapL,gapR)>=.45)return 4;
+    const peak=(i===0||h>=entries[i-1].h-.02)&&(i===entries.length-1||h>=entries[i+1].h-.02);
+    if(peak)return 3;
+    return 2;
   }
 
   function buildFrontier(){
@@ -135,8 +147,8 @@
     };
     const g=new THREE.PlaneGeometry(SIZE,SIZE,SEG,SEG);g.rotateX(-Math.PI/2);
     const pos=g.attributes.position,col=new Float32Array(pos.count*3),tc=new THREE.Color();
-    const cD=new THREE.Color(0x00F0FF),cB=new THREE.Color(0x0E4C63),cL=new THREE.Color(0x241B52),
-          cH=new THREE.Color(0x7A3AB8),cT=new THREE.Color(0xFF2BD6),cW=new THREE.Color(0xFFB0EE);
+    const cD=new THREE.Color(0x5A4038),cB=new THREE.Color(0x1A1412),cL=new THREE.Color(0x4A3028),
+          cH=new THREE.Color(0xA04828),cT=new THREE.Color(0xE85A24),cW=new THREE.Color(0xFFB088);
     for(let i=0;i<pos.count;i++){
       const nx=pos.getX(i)/(SIZE/2),nz=pos.getZ(i)/(SIZE/2),v=hgt(nx,nz);
       pos.setY(i,v*YS);
@@ -149,7 +161,7 @@
     G.add(new THREE.Mesh(g,new THREE.MeshLambertMaterial({vertexColors:true,side:THREE.DoubleSide})));
     const wire=new THREE.Mesh(g.clone(),new THREE.MeshBasicMaterial({vertexColors:true,wireframe:true,transparent:true,opacity:.45,blending:THREE.AdditiveBlending,depthWrite:false}));
     wire.position.y=.03;G.add(wire);
-    for(const[lvl,color]of[[HUMAN,0x00F0FF],[EXPERT,0xFF2BD6]]){
+    for(const[lvl,color]of[[HUMAN,0x8A8A8A],[EXPERT,0xE85A24]]){
       const gh=new THREE.GridHelper(SIZE*1.04,14,color,color);
       gh.material.transparent=true;gh.material.opacity=.28;gh.material.blending=THREE.AdditiveBlending;gh.material.depthWrite=false;
       gh.position.y=lvl*YS;G.add(gh);
@@ -185,8 +197,8 @@
     };
     const g=new THREE.PlaneGeometry(HW*2,HD*2,SEGX,SEGZ);g.rotateX(-Math.PI/2);
     const pos=g.attributes.position,col=new Float32Array(pos.count*3),tc=new THREE.Color();
-    const cLo=new THREE.Color(0x0E4C63),cMd=new THREE.Color(0x241B52),cMd2=new THREE.Color(0x7A3AB8),
-          cHi=new THREE.Color(0xFF2BD6),cW=new THREE.Color(0xFFB0EE),cVi=new THREE.Color(0xB08CFF);
+    const cLo=new THREE.Color(0x1A1412),cMd=new THREE.Color(0x3A2820),cMd2=new THREE.Color(0xA04828),
+          cHi=new THREE.Color(0xE85A24),cW=new THREE.Color(0xFFB088),cVi=new THREE.Color(0xC45A2A);
     for(let i=0;i<pos.count;i++){
       const x=pos.getX(i),z=pos.getZ(i),v=field(x,z);
       pos.setY(i,v);
@@ -211,21 +223,30 @@
     }
     if(cfg.seamT!=null){
       const sx=mapX(cfg.seamT);
-      const seam=new THREE.Mesh(new THREE.BoxGeometry(.14,.14,HD*2+2),glow(0xFF2BD6,.6));
-      seam.position.set(sx,field(sx,0)+.5,0);G.add(seam);
-      addLabel(inst,'plane','breakpoint · Apr 2024',sx,HMAX+1.6,0);
+      const seamY=field(sx,0)+.5;
+      const seam=new THREE.Mesh(new THREE.BoxGeometry(.14,.14,HD*2+2),glow(0xE85A24,.6));
+      seam.position.set(sx,seamY,0);G.add(seam);
+      /* Keep near the seam on the floor — not up by the METR ceiling plane. */
+      addLabel(inst,'plane','breakpoint · Apr 2024',sx,Math.min(seamY+1.8,3.2),HD*.55);
     }
     for(let y=Math.ceil(cfg.tRange[0]);y<=Math.floor(cfg.tRange[1]);y+=cfg.yearStep||1){
-      const post=new THREE.Mesh(new THREE.BoxGeometry(.14,1.3,.14),glow(0x5A55B0,.9));
+      const post=new THREE.Mesh(new THREE.BoxGeometry(.14,1.3,.14),glow(0xFF7A3D,.75));
       post.position.set(mapX(y),.65,HD+1.4);G.add(post);
     }
+    const dense=N>=8;
     bumps.forEach((b,i)=>{
-      addLabel(inst,b.fl?'peak':'',b.e.m+'<small>'+b.e.sub+'</small>',b.x,b.h+1.2,b.z);
+      const prio=bumpLabelPriority(cfg.entries,i,b.fl);
+      /* Stagger height so close-in-time peaks don't share the same screen row. */
+      const yOff=1.2+(i%3)*1.55+((i%2)?.35:0);
+      const showSub=!dense||prio>=4||b.fl;
+      const html=showSub?b.e.m+'<small>'+b.e.sub+'</small>':b.e.m;
+      addLabel(inst,b.fl?'peak':'',html,b.x,b.h+yOff,b.z,prio);
     });
     return {group:G,wire,camR:cfg.camR,targetY:6};
   }
 
-  const LOGMAX=Math.log10(80000);
+  /* Linear axis capped at METR's 16 h ceiling — early models sit on the floor on purpose. */
+  const HCEIL=57600;
   const INSTRUMENTS={
     frontier:{
       no:'OVERVIEW',name:'The Jagged Frontier',
@@ -233,12 +254,15 @@
       pair:null,built:buildFrontier()},
     horizon:{
       no:'INSTRUMENT I',name:'Task Horizon',
-      desc:'time × model × how long AI works alone. 2 s → 16+ h; the seam is the Apr-2024 breakpoint, the red grid METR\u2019s 16 h ceiling.',
+      desc:'time × model × how long AI works alone — linear seconds, not log. Pre-2024 is a flat floor; the seam is the Apr-2024 breakpoint; grids at 8 h and METR\u2019s 16 h ceiling.',
       pair:'horizon',
       built:buildTerrain('horizon',{tRange:[2019,2026.6],camR:62,seamT:BR,
-        entries:hPts.map(p=>({t:p.x,m:p.m,sub:humanTime(p.y),h:Math.log10(Math.max(p.y,1))/LOGMAX,fl:p.fl})),
-        trendH:t=>Math.log10(Math.max(trS(t),1))/LOGMAX,
-        planes:[{h:Math.log10(57600)/LOGMAX,color:0xFF4D6D,label:'METR ceiling — 16 h'}]})},
+        entries:hPts.map(p=>({t:p.x,m:p.m,sub:humanTime(p.y),h:clamp(p.y/HCEIL,0,1.05),fl:p.fl})),
+        trendH:t=>clamp(trS(t)/HCEIL,0,1.05),
+        planes:[
+          {h:28800/HCEIL,color:0xC45A2A,label:'8 h'},
+          {h:57600/HCEIL,color:0xE85A24,label:'METR ceiling — 16 h'}
+        ]})},
     compute:{
       no:'INSTRUMENT II',name:'Compute Skyline',
       desc:'time × model × training FLOP. Nine orders of magnitude, AlexNet\u2019s foothill to Grok 3\u2019s summit; grids at 10²⁰/10²³/10²⁶.',
@@ -246,7 +270,7 @@
       built:buildTerrain('compute',{tRange:[2012,2025.6],camR:62,seamT:null,yearStep:2,
         entries:cPts.map(c=>({t:c.x,m:c.m,sub:c.y.toExponential(1)+' FLOP',h:clamp((Math.log10(c.y)-16)/11,0,1)})),
         trendH:t=>clamp((Math.log10(D.compute[0].flop*Math.pow(4.5,t-D.compute[0].date))-16)/11,0,1),
-        planes:[{h:(20-16)/11,color:0x00F0FF,label:'10²⁰ FLOP'},{h:(23-16)/11,color:0x00F0FF,label:'10²³ FLOP'},{h:(26-16)/11,color:0xFF2BD6,label:'10²⁶ FLOP'}]})},
+        planes:[{h:(20-16)/11,color:0x8A8A8A,label:'10²⁰ FLOP'},{h:(23-16)/11,color:0xC45A2A,label:'10²³ FLOP'},{h:(26-16)/11,color:0xE85A24,label:'10²⁶ FLOP'}]})},
     price:{
       no:'INSTRUMENT III',name:'Cost Collapse',
       desc:'time × threshold × price of GPT-3-class capability. The only range that erodes: $60 → $0.06 through the $100/$1/$0.01 grids.',
@@ -257,7 +281,7 @@
           for(let i=0;i<pPts.length-1;i++)if(t>=pPts[i].x&&t<=pPts[i+1].x){a=pPts[i];b=pPts[i+1];break;}
           const k=clamp((t-a.x)/Math.max(b.x-a.x,.001),0,1);
           return clamp((Math.log10(Math.pow(10,lerp(Math.log10(a.y),Math.log10(b.y),k)))+2)/4,0,1);},
-        planes:[{h:(Math.log10(100)+2)/4,color:0x3DFFA8,label:'$100'},{h:(Math.log10(1)+2)/4,color:0x3DFFA8,label:'$1'},{h:(Math.log10(.01)+2)/4,color:0x3DFFA8,label:'$0.01'}]})},
+        planes:[{h:(Math.log10(100)+2)/4,color:0x8A8A8A,label:'$100'},{h:(Math.log10(1)+2)/4,color:0xC45A2A,label:'$1'},{h:(Math.log10(.01)+2)/4,color:0xE85A24,label:'$0.01'}]})},
   };
   const ORDER=['frontier','horizon','compute','price'];
 
@@ -381,23 +405,26 @@
     }
     projected.sort((a,b)=>b.l.priority-a.l.priority||a.dist-b.dist);
     const occupied=[];
-    const safeTop=isMobile?62:0;
-    const safeBottom=isMobile?(compactLandscape?84:(INSTRUMENTS[cur].pair?154:104)):0;
+    const safeTop=isMobile?62:8;
+    const safeBottom=isMobile?(compactLandscape?84:(INSTRUMENTS[cur].pair?154:104)):12;
+    const pad=isMobile?5:8;
     for(const p of projected){
       const l=p.l;
-      const w=isMobile?Math.min(rect.width*.42,Math.max(74,(l.el.textContent||'').length*5.2)):0;
-      const h=isMobile?30:0;
+      const chars=(l.el.textContent||'').length;
+      const hasSub=!!l.el.querySelector?.('small');
+      const w=Math.min(rect.width*(isMobile?.42:.28),Math.max(isMobile?74:88,chars*(isMobile?5.2:6.4)));
+      const h=isMobile?(hasSub?34:26):(hasSub?38:22);
       const box={left:p.x-w/2,right:p.x+w/2,top:p.y-h,bottom:p.y};
-      const blocked=isMobile&&(box.left<6||box.right>rect.width-6||box.top<safeTop||box.bottom>rect.height-safeBottom||
-        occupied.some(o=>box.left<o.right+5&&box.right>o.left-5&&box.top<o.bottom+5&&box.bottom>o.top-5));
-      if(blocked){l.el.style.display='none';continue;}
-      if(isMobile)occupied.push(box);
+      const oob=box.left<6||box.right>rect.width-6||box.top<safeTop||box.bottom>rect.height-safeBottom;
+      const hit=occupied.some(o=>box.left<o.right+pad&&box.right>o.left-pad&&box.top<o.bottom+pad&&box.bottom>o.top-pad);
+      if(oob||hit){l.el.style.display='none';continue;}
+      occupied.push(box);
       l.el.style.display='block';
       l.el.style.left=p.x+'px';
       l.el.style.top=p.y+'px';
       l.el.style.transform=`translate(-50%,${l.anchorY}) scale(${p.s.toFixed(3)})`;
       l.el.style.opacity=(clamp(p.s*1.4-.5,.4,1)*rise).toFixed(2);
-      l.el.style.zIndex=String(Math.round(clamp(9-p.dist/24,1,8)));
+      l.el.style.zIndex=String(Math.round(clamp(9-p.dist/24,1,8))+l.priority);
     }
   })(0);
   function resize(){

@@ -15,21 +15,21 @@
   const canvas=document.getElementById('gl-hero');
   const cw=()=>canvas.clientWidth||innerWidth, ch=()=>canvas.clientHeight||600;
   const scene=new THREE.Scene();
-  scene.background=new THREE.Color(0x07051A);
-  scene.fog=new THREE.FogExp2(0x0A0724,0.009);
+  scene.background=new THREE.Color(0x000000);
+  scene.fog=new THREE.FogExp2(0x000000,0.008);
   const camera=new THREE.PerspectiveCamera(isMobile?56:44,cw()/ch(),.1,600);
   const renderer=new THREE.WebGLRenderer({canvas,antialias:!isMobile});
   renderer.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.6:2));
   renderer.setSize(cw(),ch(),false);
-  scene.add(new THREE.AmbientLight(0x4a4a8a,.85));
-  const lM=new THREE.PointLight(0xFF2BD6,1.0,220);lM.position.set(-30,50,-20);scene.add(lM);
-  const lC=new THREE.PointLight(0x00F0FF,.9,220);lC.position.set(36,30,36);scene.add(lC);
+  scene.add(new THREE.AmbientLight(0xffffff,.4));
+  const lM=new THREE.PointLight(0xE85A24,1.1,220);lM.position.set(-30,50,-20);scene.add(lM);
+  const lC=new THREE.PointLight(0xFF7A3D,.7,220);lC.position.set(36,30,36);scene.add(lC);
 
   const domains=D.domains,HUMAN=1.0,EXPERT=1.6,YS=9,SIZE=56,SEG=isMobile?96:140,BASE=.68;
   const hgt=(nx,nz)=>{let pk=0,dp=0;for(const p of domains){const dx=nx-p.x,dz=nz-p.z,g=Math.exp(-(dx*dx+dz*dz)/(2*p.s*p.s));if(p.h>=BASE)pk=Math.max(pk,(p.h-BASE)*g);else dp=Math.max(dp,(BASE-p.h)*g);}return BASE+pk-dp+.045*Math.sin(nx*9.1)*Math.cos(nz*7.3)+.03*Math.sin((nx+nz)*13.7);};
   const g=new THREE.PlaneGeometry(SIZE,SIZE,SEG,SEG);g.rotateX(-Math.PI/2);
   const pos=g.attributes.position,col=new Float32Array(pos.count*3),t=new THREE.Color();
-  const cD=new THREE.Color(0x00F0FF),cB=new THREE.Color(0x0E4C63),cL=new THREE.Color(0x241B52),cH=new THREE.Color(0x7A3AB8),cT=new THREE.Color(0xFF2BD6),cW=new THREE.Color(0xFFB0EE);
+  const cD=new THREE.Color(0x5A4038),cB=new THREE.Color(0x1A1412),cL=new THREE.Color(0x4A3028),cH=new THREE.Color(0xA04828),cT=new THREE.Color(0xE85A24),cW=new THREE.Color(0xFFB088);
   for(let i=0;i<pos.count;i++){
     const nx=pos.getX(i)/(SIZE/2),nz=pos.getZ(i)/(SIZE/2),v=hgt(nx,nz);
     pos.setY(i,v*YS);
@@ -42,7 +42,7 @@
   scene.add(new THREE.Mesh(g,new THREE.MeshLambertMaterial({vertexColors:true,side:THREE.DoubleSide})));
   const wire=new THREE.Mesh(g.clone(),new THREE.MeshBasicMaterial({vertexColors:true,wireframe:true,transparent:true,opacity:.45,blending:THREE.AdditiveBlending,depthWrite:false}));
   wire.position.y=.03;scene.add(wire);
-  for(const[lvl,c]of[[HUMAN,0x00F0FF],[EXPERT,0xFF2BD6]]){
+  for(const[lvl,c]of[[HUMAN,0x8A8A8A],[EXPERT,0xE85A24]]){
     const gh=new THREE.GridHelper(SIZE*1.04,14,c,c);
     gh.material.transparent=true;gh.material.opacity=.28;gh.material.blending=THREE.AdditiveBlending;gh.material.depthWrite=false;
     gh.position.y=lvl*YS;scene.add(gh);
@@ -87,7 +87,7 @@
     else hero.requestFullscreen?.();
   });
   const panBtn=document.getElementById('ctl-pan');
-  panBtn.addEventListener('click',()=>{panMode=!panMode;panBtn.style.borderColor=panMode?'#FF2BD6':'';panBtn.style.color=panMode?'#FF2BD6':'';});
+  panBtn.addEventListener('click',()=>{panMode=!panMode;panBtn.style.borderColor=panMode?'#E85A24':'';panBtn.style.color=panMode?'#E85A24':'';});
   const setZoom=f=>{zoom=clamp(zoom*f,.45,2.4);};
   document.getElementById('ctl-zin').addEventListener('click',()=>setZoom(.85));
   document.getElementById('ctl-zout').addEventListener('click',()=>setZoom(1.18));
