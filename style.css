@@ -465,9 +465,13 @@ body.v8 .inst-open{position:absolute;right:1.2rem;bottom:1.1rem;width:auto;paddi
   .lbl.plane{font-size:.58rem;max-width:36vw}
   .lbl.plane.axis{font-size:.55rem;padding:0}
   .stage-hint{display:none}
-  #view-banner{left:.55rem;right:.55rem;top:.55rem;max-width:none;padding:.65rem .75rem .7rem}
-  #view-banner h2{font-size:1.05rem}
-  #view-banner p{font-size:.68rem;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+  /* Sit under the top control bar with a clear gap. */
+  #view-banner{left:.55rem;right:.55rem;top:calc(.55rem + 52px + .75rem);max-width:none;z-index:16;
+    padding:.55rem .7rem .6rem;clip-path:none;border-radius:8px}
+  #view-banner .vb-no{font-size:.54rem;margin-bottom:.2rem}
+  #view-banner h2{font-size:.98rem;margin-bottom:.3rem}
+  #view-banner p{font-size:.66rem;line-height:1.4;display:block;opacity:.95;
+    -webkit-line-clamp:unset;overflow:visible}
   #overlay{align-items:flex-end;padding:0}
   #overlay-panel{width:100%;max-height:calc(100dvh - env(safe-area-inset-top) - .5rem);
     padding:.9rem .9rem calc(.9rem + env(safe-area-inset-bottom));clip-path:none;
